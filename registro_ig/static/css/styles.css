@@ -1,15 +1,22 @@
-header,footer{
+footer{
     background-color: var(--primary);
     color: var(--primary-inverse);
-    font-size: 1.4em;
+    font-size: 1.0em;
+    font-weight: bold;
+}
+
+header{
+    background-color: var(--primary);
+    color: var(--primary-inverse);
+    font-size: 2.0em;
     font-weight: bold;
 }
 
 body{
-    min-height: 100vh;
+    min-height: 108vh;
     display: grid;
     grid-template-rows: auto 50px 1fr auto;
-    margin: 0;
+    margin: 1;
 }
 
 ul.errors{
