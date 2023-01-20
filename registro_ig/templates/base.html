@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de cuentas: {{pageTitle}}</title>
+    <link rel="stylesheet" href="/static/css/pico.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            App Ingresos&Gastos
+        </div>
+    </header>
+    <nav class="container">
+      
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/new">Alta</a></li>
+          
+        </ul>
+      </nav>
+
+    <section class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        
+        {% block section %}
+        {% endblock %}
+    </section>
+
+    <footer>
+        <div class="container">
+            &copy; 2022 -RL
+        </div>
+       
+    </footer>   
+    
+</body>
+</html>
