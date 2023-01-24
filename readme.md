@@ -41,4 +41,16 @@ flask --app main run -p 5001
 ## Comando para lanzar en modo debug y con puerto cambiado
 ```
 flask --app main --debug run -p 5001
+
+## Acceder al listado general monedas
+
+https://rest.coinapi.io/v1/exchanges/?apikey=24E07BC2-CA11-4FD2-9F14-889CEE3B8DBF
+
+## URL con cambio (ex de ETH a EUR)
+
+https://rest.coinapi.io/v1/exchangerate/ETH/EUR?apikey=24E07BC2-CA11-4FD2-9F14-889CEE3B8DBF
+
+## Insatalacion pip install requests en init
+
+. para peticiones http
 ```
