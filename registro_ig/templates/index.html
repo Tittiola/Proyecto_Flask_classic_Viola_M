@@ -1,5 +1,33 @@
 {% extends "base.html" %}
 
 {% block section %}
+<table role="grid">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>From</th>
+            <th>Q</th>
+            <th>To</th>
+            <th>Q</th>
+        </tr>
 
+    </thead>
+    <tbody>
+
+        {% for movements in data %}
+        <tr>
+            <td>{{movements.date}}</td>
+            <td>{{movements.time}}</td>
+            <td>{{movements.moneda_from}}</td>
+            <td>{{movements.cantidad_from}}</td>
+            <td>{{movements.moneda_to}}</td>
+            <td>{{movements.cantidad_to}}</td>
+
+
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
 {% endblock %}

@@ -46,6 +46,10 @@ flask --app main --debug run -p 5001
 
 https://rest.coinapi.io/v1/exchanges/?apikey=24E07BC2-CA11-4FD2-9F14-889CEE3B8DBF
 
+## Renombrar .env y config.py a env.template y config_template
+
+para mantener en git instrucciones no especificas
+
 ## URL con cambio (ex de ETH a EUR)
 
 https://rest.coinapi.io/v1/exchangerate/ETH/EUR?apikey=24E07BC2-CA11-4FD2-9F14-889CEE3B8DBF

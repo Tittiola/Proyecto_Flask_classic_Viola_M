@@ -2,6 +2,7 @@ from registro_ig import app
 from flask import render_template
 import requests
 
+'''
 class ModelError(Exception):
     pass
 
@@ -23,19 +24,24 @@ class Exchange:
             self.time = self.resultado['time']
         else:    
             raise ModelError( f"status: {self.r.status_code} error: {self.resultado['error']} ")
+            '''
 
         
 
 
 @app.route("/")
 def index():
-    return render_template("index.html",pageTitle="Todos")
 
-@app.route("/purchase")
+    datos_mov=[
+        {"id":1, "date":"2023-25-01", "time":"11:55", "moneda_from":"EUR", "cantidad_from":1000.0, "moneda_to":"BTC", "cantidad_to":"0.2"}
+    ]
+    return render_template("index.html",pageTitle="Todos",data=datos_mov)#data esta en index con jinja, y aqui creamos la variable asignandole la lista de diccionario data_mov
+
+"""@app.route("/purchase")
 def compra():
     conversion = Exchange
     return render_template("purchase.html",pageTitle="Todos", moneda_from=conversion(criptoto=))
 
 @app.route("/status")
 def estado():
-    return render_template("status.html",pageTitle="Todos")
+    return render_template("status.html",pageTitle="Todos")"""
