@@ -15,9 +15,20 @@ header{
 body{
     min-height: 108vh;
     display: grid;
-    grid-template-rows: auto 50px 1fr auto;
+    grid-template-rows: auto 40px 1fr auto;
     margin: 1;
 }
+
+label,
+fieldset legend {
+  display: block;
+  margin-bottom: calc(var(--spacing) * 2);
+  font-weight: var(--form-label-font-weight, var(--font-weight));
+
+}
+
+
+
 
 ul.errors{
     color: red;
