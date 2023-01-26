@@ -3,6 +3,11 @@ from config import *
 #from registro_ig.conexion import Conexion
 
 
+def change_from_to():
+    moneda_from=
+    moneda_to=
+
+
 def select_all():#importo todo lo que hay en el form sql a la pagina html
     con = sqlite3.connect(ORIGIN_DATA)
     cur = con.cursor()
@@ -30,10 +35,22 @@ def select_all():#importo todo lo que hay en el form sql a la pagina html
 
 
 
-def insert(registro):
+"""def insert(registro):
     connectInsert = Conexion("insert into movements(date,concept,quantity) values(?,?,?)",registro)
     connectInsert.con.commit()#funcion que registra finalmente
     connectInsert.con.close()
+
+
+
+
+class Exchange:
+    def __init__(self,criptofrom, criptoto):
+        self.cripto_first_change = criptofrom
+        self.cripto_second_change = criptoto
+        self.rate = None
+        self.time = None
+        self.r = None
+        self.resultado = None
 
 '''def insert()
    
@@ -53,4 +70,4 @@ def update_by(id,registro):#['date','concept','quantity']
     connectUpdate=Conexion(f"UPDATE movements SET date=?,concept=?,quantity=? WHERE id={id}",registro)
     connectUpdate.con.commit()
     connectUpdate.con.close()
-    '''
+    """

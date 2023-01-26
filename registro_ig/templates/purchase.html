@@ -2,14 +2,14 @@
 
 {% block section %}
 <h1>COMPRA DE CRIPTO</h1>
-<form>
+<form action="/purchase" method="post">
 
   <!-- Grid -->
   <div class="grid">
 
     <!-- Markup example 1: input is inside label -->
     <label for="moneda_from">From</label>
-    <select id="moneda_from" required>
+    <select id="moneda_from" value="{{data.Form.moneda_from}}">
       <option value="EUR" selected>Selecciona una moneda</option>
       <option>EUR</option>
       <option>ETH</option>
@@ -24,7 +24,7 @@
     </select>
 
     <label for="moneda_to">To</label>
-    <select id="moneda_to" required>
+    <select id="moneda_to" value="{{data.Form.moneda_to}}>
       <option value="EUR" selected>Selecciona una moneda</option>
       <option>EUR</option>
       <option>ETH</option>
@@ -42,17 +42,17 @@
 
   </div>
 
-  <div class="grid">
+  <div class="grid" method="post">
 
     <!-- Markup example 1: input is inside label -->
     <label for="cantidad_from">
       Q:
-      <input type="text" id="cantidad_from" name="cantidad_from" placeholder="cantidad_from" required>
+      <input type="value" id="cantidad_from" name="cantidad_from" placeholder="cantidad_from" required step="0.01">
     </label>
 
     <label for="cantidad_to">
       Q:
-      <input type="text" id="cantidad_to" name="cantidad_to" placeholder="cantidad_to" required>
+      <input type="value" id="cantidad_to" name="cantidad_to" placeholder="cantidad_to" required >
     </label>
 
     
@@ -62,11 +62,11 @@
   <!-- Markup example 2: input is after label -->
   <label for="precio_unitario">
     P.U.
-    <input type="text" id="precio_unitario" name="precio_unitario" placeholder="precio_unitario" required>
+    <input type="value" id="precio_unitario" name="precio_unitario" placeholder="precio_unitario" required>
   <small>Esta es tu inversion.</small>
 
   <!-- Button -->
-  <button type="submit">Submit</button>
+  <button type="submit">Convertir</button>
 
 </form>
 {% endblock %}

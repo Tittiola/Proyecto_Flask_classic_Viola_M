@@ -19,11 +19,12 @@ body{
     margin: 1;
 }
 
-label,
-fieldset legend {
+label{
   display: block;
   margin-bottom: calc(var(--spacing) * 2);
   font-weight: var(--form-label-font-weight, var(--font-weight));
+  left: 0in;
+  
 
 }
 

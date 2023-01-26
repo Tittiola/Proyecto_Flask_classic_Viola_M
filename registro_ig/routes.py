@@ -1,21 +1,14 @@
 from registro_ig import app
-from flask import render_template
+from flask import render_template,request,redirect,url_for
 from registro_ig.models import select_all
-import requests
+
 
 '''
 class ModelError(Exception):
     pass
 
 
-class Exchange:
-    def __init__(self,criptofrom, criptoto):
-        self.cripto_first_change = criptofrom
-        self.cripto_second_change = criptoto
-        self.rate = None
-        self.time = None
-        self.r = None
-        self.resultado = None
+
 
     def updateExchange(self,apiKey):
         self.r = requests.get(f'https://rest.coinapi.io/v1/exchangerate/{self.criptofrom}/{self.criptoto}?apikey={apiKey}')
@@ -40,10 +33,19 @@ def index():
     ]
     return render_template("index.html",pageTitle="Todos",data=registros)#data esta en index con jinja, y aqui creamos la variable asignandole la lista de diccionario data_mov
 
-@app.route("/purchase")
+@app.route("/purchase",methods=["GET","POST"])
 def compra():
-    return render_template("purchase.html",pageTitle="Todos")
-    """("purchase.html",pageTitle="Todos", moneda_from=conversion(criptoto=))
+    if request.method == "GET":
+        """moneda_from """
+        return render_template("purchase.html",pageTitle="Todos")
+        
+    else:
+        request.form #recibo dal formulario una tupla con los datos
+        return "aqui tengo que consultari apiio"
+           
+           
+           
+"""("purchase.html",pageTitle="Todos", moneda_from=conversion(criptoto=))
 
 
 @app.route("/status")
