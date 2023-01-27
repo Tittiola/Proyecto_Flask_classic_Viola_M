@@ -1,6 +1,6 @@
 from registro_ig import app
 from flask import render_template,request,redirect,url_for
-from registro_ig.models import select_all,insert
+from registro_ig.models import select_all,insert,change_from_to
 
 
 '''
@@ -34,17 +34,23 @@ def index():
 
 
 
-@app.route("/purchase",methods=["GET","POST"],cambio= request.get(f'https://rest.coinapi.io/v1/exchangerate/{self.criptofrom}/{self.criptoto}?apikey={apiKey}')
+@app.route("/purchase",methods=["GET","POST"])
 def compra():
-    if reques.method == "GET":
-        return render_template("purchase.html",dataForm = {})
+    if request.method == "GET":
+        return render_template("purchase.html")
     else:
-        if from == moneda_from sql and q1 <= p u ultima linea or from == EUR: 
+        cambio = change_from_to(request.form["moneda_from"],request.form["moneda_to"])
+    
+    return render_template("purchase.html", precio_unitario = cambio, dataForm={})
+
+
+        
+"""if dataForm.moneda_from == moneda_from sql and q1 <= p u ultima linea or from == EUR: 
             cambio
             if confirmacion:#segundo boton purchase
-                return render_template("""dataForm = request.from, """redirect(url_for("Status")))#aqui devuelvo los datos a formulario sql
+                return render_template(dataForm = request.from, redirect(url_for("Status")))#aqui devuelvo los datos a formulario sql
         else:
-            "f"No dispone de {moneda_from} o {cantidad_from} mayor a su total"
+            "f"No dispone de moneda_fro}o cantidad_from mayor a su total"""
 
 
 
@@ -59,16 +65,16 @@ def resume():
         
         
         
-    else:
+"""else:
         return render_template("purchase.html",pageTitle="Todos",data={})
         request.form #recibo dal formulario una tupla con los datos
            
            
            
-"""("purchase.html",pageTitle="Todos", moneda_from=conversion(criptoto=))
+("purchase.html",pageTitle="Todos", moneda_from=conversion(criptoto=))
 
 
 @app.route("/status")
 def estado():
-    return render_template("status.html",pageTitle="Todos")
-    """
+    return render_template("status.html",pageTitle="Todos")"""
+   

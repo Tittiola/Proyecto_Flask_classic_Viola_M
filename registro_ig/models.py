@@ -1,11 +1,14 @@
 import sqlite3
 from config import *
+from registro_ig import routes
+import requests
 #from registro_ig.conexion import Conexion
 
 
-"""def change_from_to():
-    moneda_from=
-    moneda_to="""
+def change_from_to(moneda1, moneda2):
+    consulta = requests.get(f'https://rest.coinapi.io/v1/exchangerate/{moneda1}/{moneda2}?apikey={apiKey}')
+    resultadotodo = consulta.json()
+    return resultadotodo["rate"]
 
 
 
@@ -33,6 +36,9 @@ def select_all():#importo todo lo que hay en el form sql a la pagina html
 
 
     return resultado
+
+
+
 
 
 
@@ -75,4 +81,17 @@ def update_by(id,registro):#['date','concept','quantity']
     connectUpdate=Conexion(f"UPDATE movements SET date=?,concept=?,quantity=? WHERE id={id}",registro)
     connectUpdate.con.commit()
     connectUpdate.con.close()
+
+
+def select_by(id):
+    con = sqlite3.connect(ORIGIN_DATA)
+    cur = con.cursor()
+
+    res = cur.execute(f"select id,date,concept,quantity from movements where id={id}")
+
+    resultado = res.fetchall()
+
+    con.close()
+
+    return resultado[0]
     """
