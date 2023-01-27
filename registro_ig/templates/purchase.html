@@ -8,8 +8,8 @@
   <div class="grid">
 
     <!-- Markup example 1: input is inside label -->
-    <label for="moneda_from">From</label>
-    <select id="moneda_from" value="{{data.Form.moneda_from}}">
+    <label for="moneda_from">From {{moneda_from}}</label>
+    <select id="moneda_from" name="moneda_from" value="{{dataForm.moneda_from}}">
       <option value="EUR" selected>Selecciona una moneda</option>
       <option>EUR</option>
       <option>ETH</option>
@@ -23,8 +23,8 @@
       <option>MATIC</option>
     </select>
 
-    <label for="moneda_to">To</label>
-    <select id="moneda_to" value="{{data.Form.moneda_to}}>
+    <label for="moneda_to">To {{moneda_to}}</label>
+    <select id="moneda_to" name="moneda_to" value="{{dataForm.moneda_to}}>
       <option value="EUR" selected>Selecciona una moneda</option>
       <option>EUR</option>
       <option>ETH</option>
@@ -46,13 +46,13 @@
 
     <!-- Markup example 1: input is inside label -->
     <label for="cantidad_from">
-      Q:
-      <input type="value" id="cantidad_from" name="cantidad_from" placeholder="cantidad_from" required step="0.01">
+      Q: {{cantidad_from}}
+      <input type="value" id="cantidad_from" name="cantidad_from" value="{{dataForm.cantidad_from}} placeholder="cantidad_from" required step="0.01">
     </label>
 
     <label for="cantidad_to">
-      Q:
-      <input type="value" id="cantidad_to" name="cantidad_to" placeholder="cantidad_to" required >
+      Q: {{cantidad_to}}
+      <input type="value" id="cantidad_to" name="cantidad_to" value="{{dataForm.cantidad_to}} placeholder="cantidad_to" required >
     </label>
 
     
@@ -61,8 +61,8 @@
 
   <!-- Markup example 2: input is after label -->
   <label for="precio_unitario">
-    P.U.
-    <input type="value" id="precio_unitario" name="precio_unitario" placeholder="precio_unitario" required>
+    P.U. {{precio_unitario}}
+    <input type="value" id="precio_unitario" name="precio_unitario" value="{{dataForm.P.U}} placeholder="precio_unitario" required>
   <small>Esta es tu inversion.</small>
 
   <!-- Button -->

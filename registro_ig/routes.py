@@ -1,6 +1,6 @@
 from registro_ig import app
 from flask import render_template,request,redirect,url_for
-from registro_ig.models import select_all
+from registro_ig.models import select_all,insert
 
 
 '''
@@ -21,8 +21,6 @@ class ModelError(Exception):
             '''
 
         
-
-
 @app.route("/")
 def index():
 
@@ -33,15 +31,37 @@ def index():
     ]
     return render_template("index.html",pageTitle="Todos",data=registros)#data esta en index con jinja, y aqui creamos la variable asignandole la lista de diccionario data_mov
 
-@app.route("/purchase",methods=["GET","POST"])
+
+
+
+@app.route("/purchase",methods=["GET","POST"],cambio= request.get(f'https://rest.coinapi.io/v1/exchangerate/{self.criptofrom}/{self.criptoto}?apikey={apiKey}')
 def compra():
-    if request.method == "GET":
-        """moneda_from """
-        return render_template("purchase.html",pageTitle="Todos")
+    if reques.method == "GET":
+        return render_template("purchase.html",dataForm = {})
+    else:
+        if from == moneda_from sql and q1 <= p u ultima linea or from == EUR: 
+            cambio
+            if confirmacion:#segundo boton purchase
+                return render_template("""dataForm = request.from, """redirect(url_for("Status")))#aqui devuelvo los datos a formulario sql
+        else:
+            "f"No dispone de {moneda_from} o {cantidad_from} mayor a su total"
+
+
+
+
+@app.route("/status")
+def resume():
+    return render_template("status.html")
+
+
+
+
+        
+        
         
     else:
+        return render_template("purchase.html",pageTitle="Todos",data={})
         request.form #recibo dal formulario una tupla con los datos
-        return "aqui tengo que consultari apiio"
            
            
            
