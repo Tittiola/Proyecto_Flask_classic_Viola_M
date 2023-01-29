@@ -34,23 +34,30 @@ def index():
 
 
 
-@app.route("/purchase",methods=["GET","POST"])
+@app.route("/purchase",methods=["POST"])
 def compra():
-    if request.method == "GET":
-        return render_template("purchase.html")
-    else:
-        cambio = change_from_to(request.form["moneda_from"],request.form["moneda_to"])
+        
+        moneda_from=request.moneda_from
+
+        return render_template("/purchase.html", moneda_from=moneda_from)
+       
+       
+       
+       
+'''moneda_from=moneda_from moneda_to=moneda_to
+         cantidad_to = cantidad_to
+        return render_template("/purchase.html",pageTitle = "Todos", moneda_from=moneda_from,moneda_to=moneda_to,cantidad_to=cantidad_to )
+        change = change_from_to(moneda_from,moneda_to)
+
     
-    return render_template("purchase.html", precio_unitario = cambio, dataForm={})
+    return render_template("/purchase.html",pageTitle = "Todos", cambio=change )'''
+
+
+
+    
 
 
         
-"""if dataForm.moneda_from == moneda_from sql and q1 <= p u ultima linea or from == EUR: 
-            cambio
-            if confirmacion:#segundo boton purchase
-                return render_template(dataForm = request.from, redirect(url_for("Status")))#aqui devuelvo los datos a formulario sql
-        else:
-            "f"No dispone de moneda_fro}o cantidad_from mayor a su total"""
 
 
 

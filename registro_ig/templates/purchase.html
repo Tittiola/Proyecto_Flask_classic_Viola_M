@@ -8,9 +8,9 @@
   <div class="grid">
 
     <!-- Markup example 1: input is inside label -->
-    <label for="moneda_from">From {{moneda_from}}</label>
-    <select id="moneda_from" name="moneda_from" value="{{dataForm.moneda_from}}">
-      <option value="EUR" selected>Selecciona una moneda</option>
+    <label for="moneda_from">From</label>
+    <input type="text" id="moneda_from" name="moneda_from">
+      <option value="{{ moneda_from }}" selected>Selecciona una moneda</option>
       <option>EUR</option>
       <option>ETH</option>
       <option>BNB</option>
@@ -23,8 +23,8 @@
       <option>MATIC</option>
     </select>
 
-    <label for="moneda_to">To {{moneda_to}}</label>
-    <select id="moneda_to" name="moneda_to" value="{{dataForm.moneda_to}}>
+    <label for="moneda_to">To</label>
+    <input type="text" id="moneda_to" name="moneda_to" value="{{ moneda_to }}" type="submit">
       <option value="EUR" selected>Selecciona una moneda</option>
       <option>EUR</option>
       <option>ETH</option>
@@ -42,18 +42,25 @@
 
   </div>
 
-  <div class="grid" method="post">
+  <div class="grid">
 
     <!-- Markup example 1: input is inside label -->
     <label for="cantidad_from">
-      Q: {{cantidad_from}}
-      <input type="value" id="cantidad_from" name="cantidad_from" value="{{dataForm.cantidad_from}} placeholder="cantidad_from" required step="0.01">
-    </label>
+      Q: </label>
+      <input type="number" id="cantidad_from" name="cantidad_from" value="{{ cantidad_from }}" placeholder="cantidad_from">
+    
+      <a href="/purchase">
+
+       <span class="material-symbols-outlined">
+         calculate
+        </span>
+      </a>
+     
 
     <label for="cantidad_to">
-      Q: {{cantidad_to}}
-      <input type="value" id="cantidad_to" name="cantidad_to" value="{{dataForm.cantidad_to}} placeholder="cantidad_to" required >
-    </label>
+      Q: </label>
+      <output type="number" id="cantidad_to" name="cantidad_to" value="{{ cantidad_to }}"placeholder="cantidad_to">
+    
 
     
 
@@ -62,11 +69,14 @@
   <!-- Markup example 2: input is after label -->
   <label for="precio_unitario">
     P.U. {{precio_unitario}}
-    <input type="value" id="precio_unitario" name="precio_unitario" value="{{dataForm.P.U}} placeholder="precio_unitario" required>
+    <input type="value" id="precio_unitario" name="precio_unitario" placeholder="precio_unitario" required>
   <small>Esta es tu inversion.</small>
 
-  <!-- Button -->
-  <button type="submit">Convertir</button>
+  <a href="status">
+    <span class="material-symbols-outlined">
+    check_box
+    </span>
+  </a>
 
 </form>
 {% endblock %}
