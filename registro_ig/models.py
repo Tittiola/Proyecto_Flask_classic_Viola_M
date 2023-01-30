@@ -8,7 +8,9 @@ ORIGIN_DATA="data/movimientos.sqlite"
 
 
 def change_from_to(moneda1, moneda2):
+    return "11.5"
     consulta = requests.get(f'https://rest.coinapi.io/v1/exchangerate/{moneda1}/{moneda2}?apikey={apiKey}')
+    breakpoint()
     Q = consulta.json()
     return Q["rate"]
 
