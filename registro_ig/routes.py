@@ -34,12 +34,33 @@ def index():
 
 
 
-@app.route("/purchase",methods=["POST"])
+@app.route("/purchase",methods=["GET","POST"])
 def compra():
+    if request.method == "GET":
+        return render_template("purchase.html")
+    else:
+        moneda_from=moneda_from
+        moneda_to=moneda_to
+        cantidad_to=""
+        cambio_unidad=change_from_to(moneda_from,moneda_to)
         
-        moneda_from=request.moneda_from
+        return render_template("purchase.html",moneda_from=moneda_from,moneda_to=moneda_to,cambio_unidad=cantidad_to,dataForm=request.form)
+        
+        
+        #change_from_to conversion y almacenarla en Q
+        #multiplcacion cantidad_from con q y almacenarla en pu
+        #insert([ request.form['moneda_from'], request.form['moneda_to'], request.form['cantidad_from']  ])
+        cantidad_from=cantidad_from
 
-        return render_template("/purchase.html", moneda_from=moneda_from)
+            
+    #return render_template("purchase.html",cantidad_from=cantidad_from)
+
+
+"""@app.route("/purchase")
+def compra():
+    pass
+    return render_template("purchase.html")"""
+        
        
        
        
