@@ -1,16 +1,14 @@
 import sqlite3
 import requests
 #from registro_ig import routes
-#from config import apiKey
-apiKey='24E07BC2-CA11-4FD2-9F14-889CEE3B8DBF'
-ORIGIN_DATA="data/movimientos.sqlite"
+from config import apiKey, ORIGIN_DATA
+
 
 
 
 def change_from_to(moneda1, moneda2):
-    return "11.5"
     consulta = requests.get(f'https://rest.coinapi.io/v1/exchangerate/{moneda1}/{moneda2}?apikey={apiKey}')
-    breakpoint()
+    #breakpoint()
     Q = consulta.json()
     return Q["rate"]
 

@@ -11,7 +11,7 @@
 
     <!-- Markup example 1: input is inside label -->
     <label for="moneda_from">From</label> 
-    <select id="moneda_from" name="moneda_from" required>
+    <select class="myselect" id="moneda_from" name="moneda_from" required>
       <option value="{{ moneda_from }}" selected>Selecciona la moneda que quiere convertir</option>
       
       <option>EUR</option>
@@ -27,7 +27,7 @@
     </select>
   
  
-
+   
     <label for="moneda_to">From</label> 
     <select id="moneda_to" name="moneda_to" required>
       <option value="{{ moneda_to }}" selected>Selecciona la criptomoneda deseada</option>
@@ -42,6 +42,7 @@
       <option>SOL</option>
       <option>MATIC</option>
     </select>
+    
   
     
 
@@ -52,7 +53,7 @@
     <!-- Markup example 1: input is inside label -->
     <label for="cantidad_from">
       Q: </label>
-      <input type="number" id="cantidad_from" name="cantidad_from" value="{{ cantidad_from }}" placeholder="cantidad_from">
+      <input type="value" id="cantidad_from" name="cantidad_from" value="{{ cantidad_from }}" placeholder="cantidad_from">
     
       <button type="submit">
 
@@ -64,18 +65,26 @@
 
     <label for="cantidad_to">
       Q: </label>
-      <input type="number" id="cantidad_to" name="cantidad_to" value="{{ cantidad_to }}"placeholder="cantidad_to">
+      <input type="value" id="cantidad_to" name="cantidad_to" value="{{ cantidad_to }}"placeholder="cantidad_to">
     
   
     
 
   </div>
+  <form action="{{ url_for('purchase') }}" method="post">
+  <label for="precio_unitario">
+    P.U. 
+    <input type="value" id="precio_unitario" name="precio_unitario" placeholder="precio_unitario" value={{ precio_unitario }}>
+  <small>Esta es tu inversion.</small>
+  
+  "></form>
 
   <!-- Markup example 2: input is after label -->
   <label for="precio_unitario">
-    P.U. {{precio_unitario}}
-    <input type="value" id="precio_unitario" name="precio_unitario" placeholder="precio_unitario">
+    P.U. 
+    <input type="value" id="precio_unitario" name="precio_unitario" placeholder="precio_unitario" value={{ precio_unitario }}>
   <small>Esta es tu inversion.</small>
+
 
   <a href="status">
     <span class="material-symbols-outlined">

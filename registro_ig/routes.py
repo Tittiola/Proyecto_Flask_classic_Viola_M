@@ -36,19 +36,25 @@ def index():
 
 @app.route("/purchase",methods=["GET","POST"])
 def purchase():
-    monedas=[]
+    monedas=["EUR", "ETH", "BNB", "ADA", "DOT", "BTC", "USDT", "XRP", "SOL", "MATIC"]
     
     #breakpoint()
     if request.method == "GET":
         return render_template("purchase.html")
     else:
-        #breakpoint() 
-        moneda_from=request.form.get("moneda_from")
-        moneda_to=request.form.get("moneda_to")
+        
+        moneda_from=request.form["moneda_from"]
+        moneda_to=request.form["moneda_to"]
+        cantidad_from=request.form["cantidad_from"]
         
         cantidad_to=change_from_to(moneda_from,moneda_to)
+        precio_unitario=(float(cantidad_to) * float(cantidad_from))
+    
         
-        return render_template("purchase.html",moneda_from=moneda_from,moneda_to=moneda_to,cantidad_to=cantidad_to)
+
+            
+        
+        return render_template("purchase.html",moneda_from=moneda_from,moneda_to=moneda_to,cantidad_from=cantidad_from,cantidad_to=cantidad_to,precio_unitario=precio_unitario)
         
         
         #change_from_to conversion y almacenarla en Q
