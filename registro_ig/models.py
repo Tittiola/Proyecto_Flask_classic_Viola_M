@@ -55,9 +55,17 @@ def insert(registro):
 
     con.close()
 
+"""def compra(moneda_from, moneda_to):
+    if moneda_from == "EUR":
+        pass
+    else:
+        return "error"
+
+def tradeo(moneda_from, moneda_to):
+    if moneda_from != "EUR" and moneda_from >= ORIGIN_DATA.(sum todas) 
 
 
-"""class Exchange:
+class Exchange:
     def __init__(self,criptofrom, criptoto):
         self.cripto_first_change = criptofrom
         self.cripto_second_change = criptoto

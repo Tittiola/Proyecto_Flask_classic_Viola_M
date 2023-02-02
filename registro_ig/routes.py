@@ -1,26 +1,8 @@
 from registro_ig import app
+from datetime import date,datetime
 from flask import render_template,request,redirect,url_for
 from registro_ig.models import select_all,insert,change_from_to
 
-
-'''
-class ModelError(Exception):
-    pass
-
-
-
-
-    def updateExchange(self,apiKey):
-        self.r = requests.get(f'https://rest.coinapi.io/v1/exchangerate/{self.criptofrom}/{self.criptoto}?apikey={apiKey}')
-        self.resultado = self.r.json()
-        if self.r.status_code == 200:
-            self.rate = self.resultado['rate']#si va bien
-            self.time = self.resultado['time']
-        else:    
-            raise ModelError( f"status: {self.r.status_code} error: {self.resultado['error']} ")
-            '''
-
-        
 @app.route("/")
 def index():
 
@@ -36,53 +18,43 @@ def index():
 
 @app.route("/purchase",methods=["GET","POST"])
 def purchase():
-    monedas=["EUR", "ETH", "BNB", "ADA", "DOT", "BTC", "USDT", "XRP", "SOL", "MATIC"]
     
     #breakpoint()
     if request.method == "GET":
-        return render_template("purchase.html")
-    else:
+        return render_template("purchase.html",form={})
+    else:#entra nel post y son 2 post
+        if 'calcular' in request.form:#primer boton y primer post
         
-        moneda_from=request.form["moneda_from"]
-        moneda_to=request.form["moneda_to"]
-        cantidad_from=request.form["cantidad_from"]
-        
-        cantidad_to=change_from_to(moneda_from,moneda_to)
-        precio_unitario=(float(cantidad_to) * float(cantidad_from))
-    
-        
-
+            cantidad_from=float(request.form['cantidad_from'])
+            moneda_from=request.form['moneda_from']
+            moneda_to=request.form['moneda_to']
+            cambio=change_from_to(moneda_from,moneda_to)
+            precio_unitario = cantidad_from/cambio
             
-        
-        return render_template("purchase.html",moneda_from=moneda_from,moneda_to=moneda_to,cantidad_from=cantidad_from,cantidad_to=cantidad_to,precio_unitario=precio_unitario)
-        
-        
-        #change_from_to conversion y almacenarla en Q
-        #multiplcacion cantidad_from con q y almacenarla en pu
-        #insert([ request.form['moneda_from'], request.form['moneda_to'], request.form['cantidad_from']  ])
-        cantidad_from=cantidad_from
+            lista_request={
+                "moneda_from":request.form['moneda_from'],
+                "moneda_to":request.form['moneda_to'],
+                "cantidad_from":request.form['cantidad_from'],
+                "cantidad_to":str(cambio),
+                "precio_unitario":str(precio_unitario)
+            }
 
+
+            return render_template("purchase.html", form=lista_request, precio_unitario=precio_unitario)
+        
+        if 'comprar' in request.form:
+            registros = select_all()
             
-    #return render_template("purchase.html",cantidad_from=cantidad_from)
+            
+            insert([ request.form['date'],
+                     request.form['time'],
+                     request.form['moneda_from'],
+                     request.form['cantidad_from'],
+                     request.form['moneda_to'],
+                     request.form['cantidad_to'] ])
 
-
-"""@app.route("/purchase")
-def compra():
-    pass
-    return render_template("purchase.html")"""
+            return render_template("status.html", form=registros)
         
-       
-       
-       
-       
-'''moneda_from=moneda_from moneda_to=moneda_to
-         cantidad_to = cantidad_to
-        return render_template("/purchase.html",pageTitle = "Todos", moneda_from=moneda_from,moneda_to=moneda_to,cantidad_to=cantidad_to )
-        change = change_from_to(moneda_from,moneda_to)
-
-    
-    return render_template("/purchase.html",pageTitle = "Todos", cambio=change )'''
-
 
 
     
@@ -100,19 +72,3 @@ def resume():
 
 
 
-        
-        
-        
-"""else:
-        return render_template("purchase.html",pageTitle="Todos",data={})
-        request.form #recibo dal formulario una tupla con los datos
-           
-           
-           
-("purchase.html",pageTitle="Todos", moneda_from=conversion(criptoto=))
-
-
-@app.route("/status")
-def estado():
-    return render_template("status.html",pageTitle="Todos")"""
-   
