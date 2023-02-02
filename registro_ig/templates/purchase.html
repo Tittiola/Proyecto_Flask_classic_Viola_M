@@ -17,37 +17,40 @@
         <select id="moneda_from" name="moneda_from">
           <option value="{{form.moneda_from}}" selected>Selecciona la moneda que quiere convertir</option>
 
-          <option value="EUR" {% if form.moneda_from == "EUR" %} selected {% endif %}>EUR</option>
-          <option value="ETH" {% if form.moneda_from == "ETH" %} selected {% endif %}>ETH</option>
-          <option value="BNB" {% if form.moneda_from == "BNB" %} selected {% endif %}>BNB</option>
-          <option value="ADA" {% if form.moneda_from == "ADA" %} selected {% endif %}>ADA</option>
-          <option value="DOT" {% if form.moneda_from == "DOT" %} selected {% endif %}>DOT</option>
-          <option value="BTC" {% if form.moneda_from == "BTC" %} selected {% endif %}>BTC</option>
-          <option value="USDT" {% if form.moneda_from == "USDT" %} selected {% endif %}>USDT</option>
-          <option value="XRP" {% if form.moneda_from == "XRP" %} selected {% endif %}>XRP</option>
-          <option value="SOL" {% if form.moneda_from == "SOL" %} selected {% endif %}>SOL</option>
-          <option value="MATIC" {% if form.moneda_from == "MATIC" %} selected {% endif %}>MATIC</option>
+          <option value="EUR" {% if form.moneda_from=="EUR" %} selected {% endif %}>EUR</option>
+          <option value="ETH" {% if form.moneda_from=="ETH" %} selected {% endif %}>ETH</option>
+          <option value="BNB" {% if form.moneda_from=="BNB" %} selected {% endif %}>BNB</option>
+          <option value="ADA" {% if form.moneda_from=="ADA" %} selected {% endif %}>ADA</option>
+          <option value="DOT" {% if form.moneda_from=="DOT" %} selected {% endif %}>DOT</option>
+          <option value="BTC" {% if form.moneda_from=="BTC" %} selected {% endif %}>BTC</option>
+          <option value="USDT" {% if form.moneda_from=="USDT" %} selected {% endif %}>USDT</option>
+          <option value="XRP" {% if form.moneda_from=="XRP" %} selected {% endif %}>XRP</option>
+          <option value="SOL" {% if form.moneda_from=="SOL" %} selected {% endif %}>SOL</option>
+          <option value="MATIC" {% if form.moneda_from=="MATIC" %} selected {% endif %}>MATIC</option>
         </select>
-      </label> 
-        
+      </label>
+
 
 
 
       <label for="moneda_to">From</label>
       <select id="moneda_to" name="moneda_to" required>
-        <option value="EUR" {% if form.moneda_to == "EUR" %} selected {% endif %}>EUR</option>
-      <option value="ETH" {% if form.moneda_to == "ETH" %} selected {% endif %}>ETH</option>
-      <option value="BNB" {% if form.moneda_to == "BNB" %} selected {% endif %}>BNB</option>
-      <option value="ADA" {% if form.moneda_to == "ADA" %} selected {% endif %}>ADA</option>
-      <option value="DOT" {% if form.moneda_to == "DOT" %} selected {% endif %}>DOT</option>
-      <option value="BTC" {% if form.moneda_to == "BTC" %} selected {% endif %}>BTC</option>
-      <option value="USDT" {% if form.moneda_to == "USDT" %} selected {% endif %}>USDT</option>
-      <option value="XRP" {% if form.moneda_to == "XRP" %} selected {% endif %}>XRP</option>
-      <option value="SOL" {% if form.moneda_to == "SOL" %} selected {% endif %}>SOL</option>
-      <option value="MATIC" {% if form.moneda_to == "MATIC" %} selected {% endif %}>MATIC</option>
-    </select>
-  </label> 
-  
+        <option value="{{form.moneda_to}}" selected>Selecciona la moneda que quiere convertir</option>
+
+
+        <option value="EUR" {% if form.moneda_to=="EUR" %} selected {% endif %}>EUR</option>
+        <option value="ETH" {% if form.moneda_to=="ETH" %} selected {% endif %}>ETH</option>
+        <option value="BNB" {% if form.moneda_to=="BNB" %} selected {% endif %}>BNB</option>
+        <option value="ADA" {% if form.moneda_to=="ADA" %} selected {% endif %}>ADA</option>
+        <option value="DOT" {% if form.moneda_to=="DOT" %} selected {% endif %}>DOT</option>
+        <option value="BTC" {% if form.moneda_to=="BTC" %} selected {% endif %}>BTC</option>
+        <option value="USDT" {% if form.moneda_to=="USDT" %} selected {% endif %}>USDT</option>
+        <option value="XRP" {% if form.moneda_to=="XRP" %} selected {% endif %}>XRP</option>
+        <option value="SOL" {% if form.moneda_to=="SOL" %} selected {% endif %}>SOL</option>
+        <option value="MATIC" {% if form.moneda_to=="MATIC" %} selected {% endif %}>MATIC</option>
+      </select>
+      </label>
+
 
 
 

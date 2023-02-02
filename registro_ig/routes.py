@@ -46,14 +46,14 @@ def purchase():
             registros = select_all()
             
             
-            insert([ request.form['date'],
-                     request.form['time'],
+            insert([ "2023-01-01",
+                     "11:01",
                      request.form['moneda_from'],
                      request.form['cantidad_from'],
                      request.form['moneda_to'],
                      request.form['cantidad_to'] ])
 
-            return render_template("status.html", form=registros)
+            return redirect("/")
         
 
 
