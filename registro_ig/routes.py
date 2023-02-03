@@ -1,7 +1,7 @@
 from registro_ig import app
 from datetime import date,datetime
 from flask import render_template,request,redirect,url_for
-from registro_ig.models import select_all,insert,change_from_to
+from registro_ig.models import select_all,insert,change_from_to,status_invertido
 
 @app.route("/")
 def index():
@@ -60,14 +60,19 @@ def purchase():
     
 
 
-        
-
-
-
-
-@app.route("/status")
+@app.route("/status", methods=["GET","POST"] )
 def resume():
-    return render_template("status.html")
+    if request.method == "GET":
+        invertido=status_invertido("EUR")[0][0]
+    
+        breakpoint()
+    
+    
+        return render_template("status.html", invertido=invertido)
+        
+    else:
+        pass
+    
 
 
 

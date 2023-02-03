@@ -1,7 +1,11 @@
 import sqlite3
 import requests
 #from registro_ig import routes
-from config import apiKey, ORIGIN_DATA
+#from config import apiKey
+from registro_ig.conexion import Conexion
+ORIGIN_DATA="data/movimientos.sqlite"
+apiKey='24E07BC2-CA11-4FD2-9F14-889CEE3B8DBF'
+
 
 
 
@@ -16,17 +20,12 @@ def change_from_to(moneda1, moneda2):
 
 
 def select_all():#importo todo lo que hay en el form sql a la pagina html
-    con = sqlite3.connect(ORIGIN_DATA)
-    cur = con.cursor()
+    connect = Conexion("select id,date,time,moneda_from,cantidad_from,moneda_to,cantidad_to from movements order by date;")
+    columnas= connect.res.description#capturo los nombres de columnas
+    filas = connect.res.fetchall()#capturo las filas de datos
+    
 
-    res= cur.execute("select id,date,time,moneda_from,cantidad_from,moneda_to,cantidad_to from movements order by date;")
-   
-    filas = res.fetchall()#capturo las filas de datos
-    columnas= res.description#capturo los nombres de columnas
-
-    #objetivo crear una lista de diccionario con filas y columnas
-
-    resultado =[]#lista para guadar diccionario
+    resultado= []#lista para guadar diccionario
    
     for fila in filas:
         dato={}#crear un diccionario para cada registro
@@ -37,23 +36,31 @@ def select_all():#importo todo lo que hay en el form sql a la pagina html
             posicion += 1
         resultado.append(dato)
 
+    connect.con.close()
+
 
     return resultado
 
 
 
-
-
-
 def insert(registro):
-    con = sqlite3.connect(ORIGIN_DATA)
-    cur = con.cursor()
+    connectInsert = Conexion("insert into movements(date,time,moneda_from,cantidad_from,moneda_to,cantidad_to) values(?,?,?,?,?,?)",registro)
+    connectInsert.con.commit()#funcion que registra finalmente
+    connectInsert.con.close()
+    
 
-    cur.execute("insert into movements(date,time,moneda_from,cantidad_from,moneda_to,cantidad_to) values(?,?,?,?,?,?)",registro)
 
-    con.commit()#funcion que registra finalmente
 
-    con.close()
+def status_invertido(moneda):  
+    connectSelectBy = Conexion("select sum(cantidad_from) from movements where moneda_from == ?;", [moneda])
+    resultado = connectSelectBy.res.fetchall()
+    connectSelectBy.con.close()
+    return resultado
+
+    
+
+
+
 
 """def compra(moneda_from, moneda_to):
     if moneda_from == "EUR":
@@ -63,6 +70,9 @@ def insert(registro):
 
 def tradeo(moneda_from, moneda_to):
     if moneda_from != "EUR" and moneda_from >= ORIGIN_DATA.(sum todas) 
+
+
+
 
 
 
