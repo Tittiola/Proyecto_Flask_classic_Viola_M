@@ -47,6 +47,12 @@ def insert(registro):
     connectInsert = Conexion("insert into movements(date,time,moneda_from,cantidad_from,moneda_to,cantidad_to) values(?,?,?,?,?,?)",registro)
     connectInsert.con.commit()#funcion que registra finalmente
     connectInsert.con.close()
+
+def consulta(registro):
+    connectfind = Conexion("SELECT moneda_from, moneda_to FROM movements",registro)
+    resultado = connectfind.res.fetchall()
+    connectfind.con.close()
+    return resultado
     
 
 
@@ -56,6 +62,30 @@ def status_invertido(moneda):
     resultado = connectSelectBy.res.fetchall()
     connectSelectBy.con.close()
     return resultado
+
+def status_recuperado(moneda):  
+    connectSelectBy = Conexion("select sum(cantidad_to) from movements where moneda_to == ?;", [moneda])
+    resultado = connectSelectBy.res.fetchall()
+    connectSelectBy.con.close()
+    return resultado
+
+def valor_actual(moneda):  
+    suma_to = Conexion("select sum(cantidad_to) from movements where moneda_to == ?;", [moneda])
+    suma_from = Conexion("select sum(cantidad_from) from movements where moneda_from == ?;", [moneda])
+    resultado_to = suma_to.res.fetchall()
+    resultado_from = suma_from.res.fetchall()
+    total_actual_moneda=resultado_to-resultado_from
+    valor_unidad_cripto=change_from_to(moneda,"EUR")#averiguo el valor en euro actual de la cripto
+    valor_actual_cripto=valor_unidad_cripto*total_actual_moneda#calculo el valor actual de la cripto en la cartera
+
+    suma_to.con.close()
+    suma_from.con.close()
+
+    return valor_actual_cripto#devuelve el valor actual de una cripto, hay que sumarlo al valor de todas cripto exsistientes
+
+    
+   
+
 
     
 

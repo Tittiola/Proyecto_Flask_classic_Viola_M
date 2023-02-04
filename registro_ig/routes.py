@@ -1,7 +1,20 @@
 from registro_ig import app
 from datetime import date,datetime
 from flask import render_template,request,redirect,url_for
-from registro_ig.models import select_all,insert,change_from_to,status_invertido
+from registro_ig.models import select_all,insert,change_from_to,status_invertido,status_recuperado,consulta,valor_actual
+
+
+
+"""def validateForm(requestForm):
+    hoy = date.today().isoformat()
+    errores=[]
+    if requestForm['date'] > hoy:
+        errores.append("fecha invalida: La fecha introducida es a futuro")
+    if requestForm['concept'] == "":
+        errores.append("concepto vacio: Introduce un concepto para el registro")
+    if requestForm['quantity'] == "" or float(requestForm['quantity']) == 0.0:
+        errores.append("cantidad vacio o cero: Introduce una cantidad positiva o negativa")   
+    return errores"""
 
 @app.route("/")
 def index():
@@ -44,10 +57,13 @@ def purchase():
         
         if 'comprar' in request.form:
             registros = select_all()
+            fecha = datetime.now().strftime('%Y-%m-%d')
+            horas = datetime.now().strftime('%H:%M:%S')
             
             
-            insert([ "2023-01-01",
-                     "11:01",
+        
+            insert([ fecha,
+                     horas,
                      request.form['moneda_from'],
                      request.form['cantidad_from'],
                      request.form['moneda_to'],
@@ -64,15 +80,38 @@ def purchase():
 def resume():
     if request.method == "GET":
         invertido=status_invertido("EUR")[0][0]
-    
-        breakpoint()
-    
-    
-        return render_template("status.html", invertido=invertido)
-        
+        recuperado=status_recuperado("EUR")[0][0]
+        valor_compra=invertido-recuperado
+        return render_template("status.html", invertido=invertido, recuperado=recuperado,valor_compra=valor_compra, form={})
     else:
-        pass
+        registros = select_all()
+        lista_criptos=["ETH","BNB","ADA","DOT","BTC","USDT","XRP","SOL","MATIC"]
+        valor_actual=request.form['valor_actual']
+
+
+        if consulta(registros) in lista_criptos:
+            
+            for cripto in lista_criptos:
+                
+                res += float(valor_actual(cripto))
+            
+                
+            
+            return render_template("status.html", valor_actual= res)
+                 
+        else:
+            return render_template(valor_actual="No hay monedas disponible")
+
+
+        
+
     
+        #breakpoint()
+    
+    
+        
+        
+
 
 
 
