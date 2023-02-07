@@ -1,7 +1,7 @@
 from registro_ig import app
 from datetime import date,datetime
 from flask import render_template,request,redirect,url_for
-from registro_ig.models import select_all,insert,change_from_to,status_invertido,status_recuperado,consulta,valor_actual
+from registro_ig.models import select_all,insert,change_from_to,status_invertido,status_recuperado,delete_all
 
 
 
@@ -85,11 +85,24 @@ def resume():
         return render_template("status.html", invertido=invertido, recuperado=recuperado,valor_compra=valor_compra, form={})
     else:
         registros = select_all()
-        lista_criptos=["ETH","BNB","ADA","DOT","BTC","USDT","XRP","SOL","MATIC"]
-        valor_actual=request.form['valor_actual']
+        if 'reiniciar' in request.form:
+            delete_all()
+        
+        
+        
+            lista_criptos=["ETH","BNB","ADA","DOT","BTC","USDT","XRP","SOL","MATIC"]
+            #valor_actual=request.form['valor_actual']
+            return redirect("/")
 
 
-        if consulta(registros) in lista_criptos:
+
+        
+        
+        
+        
+        
+        
+        """if consulta(registros) in lista_criptos:
             
             for cripto in lista_criptos:
                 
@@ -107,7 +120,7 @@ def resume():
 
     
         #breakpoint()
-    
+    """
     
         
         

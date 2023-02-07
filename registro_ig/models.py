@@ -17,6 +17,12 @@ def change_from_to(moneda1, moneda2):
     return Q["rate"]
 
 
+def change_crypto(moneda):
+    consulta = requests.get(f'https://rest.coinapi.io/v1/exchangerate/{moneda}/EUR?apikey={apiKey}')
+    #breakpoint()
+    Q = consulta.json()
+    return Q["rate"]
+
 
 
 def select_all():#importo todo lo que hay en el form sql a la pagina html
@@ -43,33 +49,76 @@ def select_all():#importo todo lo que hay en el form sql a la pagina html
 
 
 
+
+
 def insert(registro):
-    connectInsert = Conexion("insert into movements(date,time,moneda_from,cantidad_from,moneda_to,cantidad_to) values(?,?,?,?,?,?)",registro)
+    connectInsert = Conexion("insert into movements(date,time,moneda_from,cantidad_from,moneda_to,cantidad_to) values(?,?,?,?,?,?)", registro)
     connectInsert.con.commit()#funcion que registra finalmente
     connectInsert.con.close()
 
+def consulta_mon_from(moneda):
+    connectfind = Conexion("select moneda_from from movements where moneda_from == ?;", [moneda])
+    resultado = connectfind.res.fetchall()
+    if resultado == []:
+        return False
+    else:
+       connectfind.con.close()
+       return True 
+
+def consulta_mon_to(moneda):
+    connectfind = Conexion("select moneda_to from movements where moneda_to == ?;", [moneda])
+    resultado = connectfind.res.fetchall()
+    if resultado == []:
+        return False
+    else:
+       connectfind.con.close()
+       return True 
+
 def consulta(registro):
-    connectfind = Conexion("SELECT moneda_from, moneda_to FROM movements",registro)
+    connectfind = Conexion("SELECT (moneda_from,moneda_to) from movements, values(?)",registro)
     resultado = connectfind.res.fetchall()
     connectfind.con.close()
     return resultado
+
+
+def consulta_mon_from_to(moneda):
+    moneda_is_in_mon_from = Conexion("select moneda_from from movements where cantidad_from > 0 and moneda_from == ?;", [moneda])
+    resultado_from = moneda_is_in_mon_from.res.fetchall()
+    moneda_is_in_mon_to = Conexion("select moneda_to from movements where cantidad_to  > 0 and moneda_to == ?;", [moneda])
+    resultado_to = moneda_is_in_mon_to.res.fetchall()
+    if resultado_from == [] and resultado_to == []:
+        return False
+    else:
+       moneda_is_in_mon_to.con.close()
+       moneda_is_in_mon_from.con.close()
+       return True 
+
+
+def delete_all():
+    connectDelete = Conexion("DELETE FROM movements;")
+    connectDelete.con.commit()
+    connectDelete.con.close()
+    connectre = Conexion("SELECT * from movements")
+    connectre.con.commit()
+    connectre.con.close()
+    return select_all
     
 
 
 
 def status_invertido(moneda):  
-    connectSelectBy = Conexion("select sum(cantidad_from) from movements where moneda_from == ?;", [moneda])
-    resultado = connectSelectBy.res.fetchall()
-    connectSelectBy.con.close()
+    connectInvertido = Conexion("select sum(cantidad_from) from movements where moneda_from == ?;", [moneda])
+    resultado =  connectInvertido.res.fetchall()
+    connectInvertido.con.close()
     return resultado
 
 def status_recuperado(moneda):  
-    connectSelectBy = Conexion("select sum(cantidad_to) from movements where moneda_to == ?;", [moneda])
-    resultado = connectSelectBy.res.fetchall()
-    connectSelectBy.con.close()
+    connectRecuperado = Conexion("select sum(cantidad_to) from movements where moneda_to == ?;", [moneda])
+    resultado = connectRecuperado.res.fetchall()
+    connectRecuperado.con.close()
     return resultado
 
-def valor_actual(moneda):  
+"""def valor_actual(moneda):  
     suma_to = Conexion("select sum(cantidad_to) from movements where moneda_to == ?;", [moneda])
     suma_from = Conexion("select sum(cantidad_from) from movements where moneda_from == ?;", [moneda])
     resultado_to = suma_to.res.fetchall()
@@ -81,7 +130,10 @@ def valor_actual(moneda):
     suma_to.con.close()
     suma_from.con.close()
 
-    return valor_actual_cripto#devuelve el valor actual de una cripto, hay que sumarlo al valor de todas cripto exsistientes
+    return valor_actual_cripto#devuelve el valor actual de una cripto, hay que sumarlo al valor de todas cripto exsistientes"""
+
+
+
 
     
    
