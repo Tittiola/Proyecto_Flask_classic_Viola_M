@@ -1,5 +1,6 @@
 import sqlite3#conexion con libreria sqlite
 from config import *
+ORIGIN_DATA="data/movimientos.sqlite"
 
 
 class Conexion:

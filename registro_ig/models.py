@@ -1,13 +1,9 @@
 import sqlite3
 import requests
-#from registro_ig import routes
-#from config import apiKey
 from registro_ig.conexion import Conexion
+
 ORIGIN_DATA="data/movimientos.sqlite"
-apiKey='24E07BC2-CA11-4FD2-9F14-889CEE3B8DBF'
-
-
-
+apiKey='336D91A9-5992-4CEE-A391-446D3AD7B024'
 
 
 def change_from_to(moneda1, moneda2):
@@ -17,9 +13,10 @@ def change_from_to(moneda1, moneda2):
     return Q["rate"]
 
 
+
 def change_crypto(moneda):
     consulta = requests.get(f'https://rest.coinapi.io/v1/exchangerate/{moneda}/EUR?apikey={apiKey}')
-    #breakpoint()
+
     Q = consulta.json()
     return Q["rate"]
 
@@ -80,7 +77,6 @@ def consulta(registro):
     connectfind.con.close()
     return resultado
 
-
 def consulta_mon_from_to(moneda):
     moneda_is_in_mon_from = Conexion("select moneda_from from movements where cantidad_from > 0 and moneda_from == ?;", [moneda])
     resultado_from = moneda_is_in_mon_from.res.fetchall()
@@ -93,7 +89,6 @@ def consulta_mon_from_to(moneda):
        moneda_is_in_mon_from.con.close()
        return True 
 
-
 def delete_all():
     connectDelete = Conexion("DELETE FROM movements;")
     connectDelete.con.commit()
@@ -104,6 +99,17 @@ def delete_all():
     return select_all
     
 
+def valor_compra(moneda):
+    if consulta_mon_from(moneda) == False:
+        invertido = 0
+    else:
+        invertido = status_invertido(moneda)[0][0]
+    if consulta_mon_to(moneda) == False:
+        recuperado= 0
+    else:
+        recuperado=status_recuperado(moneda)[0][0]
+    valor_compra=invertido-recuperado
+    return valor_compra
 
 
 def status_invertido(moneda):  
@@ -118,76 +124,51 @@ def status_recuperado(moneda):
     connectRecuperado.con.close()
     return resultado
 
-"""def valor_actual(moneda):  
-    suma_to = Conexion("select sum(cantidad_to) from movements where moneda_to == ?;", [moneda])
-    suma_from = Conexion("select sum(cantidad_from) from movements where moneda_from == ?;", [moneda])
-    resultado_to = suma_to.res.fetchall()
-    resultado_from = suma_from.res.fetchall()
-    total_actual_moneda=resultado_to-resultado_from
-    valor_unidad_cripto=change_from_to(moneda,"EUR")#averiguo el valor en euro actual de la cripto
-    valor_actual_cripto=valor_unidad_cripto*total_actual_moneda#calculo el valor actual de la cripto en la cartera
+def status_rec(moneda):  
+    connectRecuperado = Conexion("select sum(cantidad_to) from movements where moneda_to == ?;", [moneda])
+    resultado = connectRecuperado.res.fetchall()
+    connectRecuperado.con.close()
+    res = resultado(moneda)[0][0]
+    return res
 
-    suma_to.con.close()
-    suma_from.con.close()
+def valor_actua():
+    lista_criptos=["ETH","BNB","ADA","DOT","BTC","USDT","XRP","SOL","MATIC"]
 
-    return valor_actual_cripto#devuelve el valor actual de una cripto, hay que sumarlo al valor de todas cripto exsistientes"""
+    lista_crypto_verificada= []
+    for item in lista_criptos:
+        if consulta_mon_from_to(item) == True:
+            lista_crypto_verificada.append(item)
 
-
-
-
-    
-   
-
-
+    lista_crypto_from=[]
+    for item in lista_crypto_verificada:
+        if consulta_mon_from(item)== True:
+            lista_crypto_from.append(item)
     
 
+    lista_crypto_to=[]
+    for item in lista_crypto_verificada:
+        if consulta_mon_to(item)== True:
+            lista_crypto_to.append(item)
+
+
+    lista_valor_actual_cada_crypto = []
+    for crypto in lista_crypto_verificada:
+        cambio_in_euros= change_crypto(crypto)#per ogni cripto verificada hace cambio en euros
+        if crypto in lista_crypto_to:
+            recuperado=status_recuperado(crypto)[0][0]
+        else: recuperado=0
+
+        if crypto in lista_crypto_from:
+                invertido=status_invertido(item)[0][0]
+        else: invertido = 0
+
+        cantidad_real_crypto = recuperado - invertido
+        valoractualcrypto= (cambio_in_euros * cantidad_real_crypto)
+        lista_valor_actual_cada_crypto.append(valoractualcrypto)
+        resultado= sum(lista_valor_actual_cada_crypto)
+
+    return(resultado)
 
 
 
-"""def compra(moneda_from, moneda_to):
-    if moneda_from == "EUR":
-        pass
-    else:
-        return "error"
 
-def tradeo(moneda_from, moneda_to):
-    if moneda_from != "EUR" and moneda_from >= ORIGIN_DATA.(sum todas) 
-
-
-
-
-
-
-
-
-   
-
-def select_by(id):
-    connectSelectBy=Conexion(f"select id,date,concept,quantity from movements where id={id}")
-    resultado = connectSelectBy.res.fetchall()#res.fetchall captura las filas de datos
-    connectSelectBy.con.close()
-    return resultado[0]
-
-def delete_by(id):
-    connectDeleteBy=Conexion(f"delete from movements where id={id}")
-    connectDeleteBy.con.commit()
-    connectDeleteBy.con.close()
-
-def update_by(id,registro):#['date','concept','quantity']
-    connectUpdate=Conexion(f"UPDATE movements SET date=?,concept=?,quantity=? WHERE id={id}",registro)
-    connectUpdate.con.commit()
-    connectUpdate.con.close()
-
-
-def select_by(id):
-    con = sqlite3.connect(ORIGIN_DATA)
-    cur = con.cursor()
-
-    res = cur.execute(f"select id,date,concept,quantity from movements where id={id}")
-
-    resultado = res.fetchall()
-
-    con.close()
-
-    return resultado[0]
-    """

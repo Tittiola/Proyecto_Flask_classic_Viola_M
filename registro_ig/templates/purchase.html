@@ -62,7 +62,7 @@
       <!-- Markup example 1: input is inside label -->
       <label for="cantidad_from">
         Q: </label>
-      <input type="number" id="cantidad_from" name="cantidad_from" value="{{form.cantidad_from}}"
+      <input type="text" id="cantidad_from" name="cantidad_from" value="{{form.cantidad_from}}"
         placeholder="cantidad_from">
 
       <input type="submit" name="calcular" value="Calcular">
@@ -91,4 +91,9 @@
 </body>
 
 </form>
+<article>
+  
+    <li class="error">{{ msgError }}</li>
+  
+</article>
 {% endblock %}

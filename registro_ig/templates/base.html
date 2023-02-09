@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,35 +8,50 @@
     <title>Inversion en criptomonedas: {{pageTitle}}</title>
     <link rel="stylesheet" href="/static/css/pico.css">
     <link rel="stylesheet" href="/static/css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,1,200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,1,200" />
     <i class="fa-brands fa-amazon" style="font-size:200px;"></i>
+
 </head>
+
 <body>
     <header>
         <div class="container">
             Invertir en Criptomonedas
         </div>
     </header>
-        <nav aria-label="breadcrumb" class="container">
-            <ul class="container">
-              <li><a href="/">Home</a></li>
-              <li><a href="/purchase">Purchase</a></li>
-              <li><a href="/status">Status<a>
-            </ul>
-          </nav>
-      
+    <nav aria-label="breadcrumb" class="container">
+        <ul class="container">
+            {% if page == "purchase" %}
+            <li><a href="/">Home</a></li>
+            <li>Purchase</li>
+            <li><a href="/status">Status<a></li>
+            {% endif %}
+            {% if page == "Home" %}
+            <li>Home</li>
+            <li><a href="/purchase">Purchase</a></li>
+            <li><a href="/status">Status<a></li>
+            {% endif %}
+            {% if page == "status" %}
+            <li><a href="/">Home</a></li>
+            <li><a href="/purchase">Purchase</a></li>
+            <li>Status</li>
+            {% endif %}
+        </ul>
+    </nav>
+
 
     <section class="container">
         {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul class=flashes>
-                {% for message in messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-                </ul>
-            {% endif %}
+        {% if messages %}
+        <ul class=flashes>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         {% endwith %}
-        
+
         {% block section %}
         {% endblock %}
     </section>
@@ -44,8 +60,9 @@
         <div class="container">
             &copy; 2023 - Viola Maccioni. Todos los derechos reservados.
         </div>
-       
-    </footer>   
-    
+
+    </footer>
+
 </body>
+
 </html>
