@@ -3,16 +3,14 @@ import requests
 from registro_ig.conexion import Conexion
 
 ORIGIN_DATA="data/movimientos.sqlite"
-apiKey='336D91A9-5992-4CEE-A391-446D3AD7B024'
+apiKey='24E07BC2-CA11-4FD2-9F14-889CEE3B8DBF'
 
-
+#funciones con peticiones api
 def change_from_to(moneda1, moneda2):
     consulta = requests.get(f'https://rest.coinapi.io/v1/exchangerate/{moneda1}/{moneda2}?apikey={apiKey}')
     #breakpoint()
     Q = consulta.json()
     return Q["rate"]
-
-
 
 def change_crypto(moneda):
     consulta = requests.get(f'https://rest.coinapi.io/v1/exchangerate/{moneda}/EUR?apikey={apiKey}')
@@ -20,7 +18,7 @@ def change_crypto(moneda):
     Q = consulta.json()
     return Q["rate"]
 
-
+#funciones con peticiones sqlite
 
 def select_all():#importo todo lo que hay en el form sql a la pagina html
     connect = Conexion("select id,date,time,moneda_from,cantidad_from,moneda_to,cantidad_to from movements order by date;")
@@ -43,8 +41,6 @@ def select_all():#importo todo lo que hay en el form sql a la pagina html
 
 
     return resultado
-
-
 
 
 
@@ -71,23 +67,7 @@ def consulta_mon_to(moneda):
        connectfind.con.close()
        return True 
 
-def consulta(registro):
-    connectfind = Conexion("SELECT (moneda_from,moneda_to) from movements, values(?)",registro)
-    resultado = connectfind.res.fetchall()
-    connectfind.con.close()
-    return resultado
 
-def consulta_mon_from_to(moneda):
-    moneda_is_in_mon_from = Conexion("select moneda_from from movements where cantidad_from > 0 and moneda_from == ?;", [moneda])
-    resultado_from = moneda_is_in_mon_from.res.fetchall()
-    moneda_is_in_mon_to = Conexion("select moneda_to from movements where cantidad_to  > 0 and moneda_to == ?;", [moneda])
-    resultado_to = moneda_is_in_mon_to.res.fetchall()
-    if resultado_from == [] and resultado_to == []:
-        return False
-    else:
-       moneda_is_in_mon_to.con.close()
-       moneda_is_in_mon_from.con.close()
-       return True 
 
 def delete_all():
     connectDelete = Conexion("DELETE FROM movements;")
@@ -111,6 +91,18 @@ def valor_compra(moneda):
     valor_compra=invertido-recuperado
     return valor_compra
 
+def cantidad_realcryp(moneda):
+    if consulta_mon_from(moneda) == False:
+        invertido = 0
+    else:
+        invertido = status_invertido(moneda)[0][0]
+    if consulta_mon_to(moneda) == False:
+        recuperado= 0
+    else:
+        recuperado=status_recuperado(moneda)[0][0]
+    valor_compra=recuperado-invertido
+    return valor_compra
+
 
 def status_invertido(moneda):  
     connectInvertido = Conexion("select sum(cantidad_from) from movements where moneda_from == ?;", [moneda])
@@ -124,16 +116,29 @@ def status_recuperado(moneda):
     connectRecuperado.con.close()
     return resultado
 
-def status_rec(moneda):  
-    connectRecuperado = Conexion("select sum(cantidad_to) from movements where moneda_to == ?;", [moneda])
-    resultado = connectRecuperado.res.fetchall()
-    connectRecuperado.con.close()
-    res = resultado(moneda)[0][0]
-    return res
 
-def valor_actua():
-    lista_criptos=["ETH","BNB","ADA","DOT","BTC","USDT","XRP","SOL","MATIC"]
 
+
+
+
+
+
+registros = select_all()
+lista_criptos=["ETH","BNB","ADA","DOT","BTC","USDT","XRP","SOL","MATIC"]
+
+def consulta_mon_from_to(moneda):
+    moneda_is_in_mon_from = Conexion("select moneda_from from movements where cantidad_from > 0 and moneda_from == ?;", [moneda])
+    resultado_from = moneda_is_in_mon_from.res.fetchall()
+    moneda_is_in_mon_to = Conexion("select moneda_to from movements where cantidad_to  > 0 and moneda_to == ?;", [moneda])
+    resultado_to = moneda_is_in_mon_to.res.fetchall()
+    if resultado_from == [] and resultado_to == []:
+        return False
+    else:
+       moneda_is_in_mon_to.con.close()
+       moneda_is_in_mon_from.con.close()
+       return True 
+
+def valor_act():
     lista_crypto_verificada= []
     for item in lista_criptos:
         if consulta_mon_from_to(item) == True:
@@ -143,13 +148,11 @@ def valor_actua():
     for item in lista_crypto_verificada:
         if consulta_mon_from(item)== True:
             lista_crypto_from.append(item)
-    
 
     lista_crypto_to=[]
     for item in lista_crypto_verificada:
         if consulta_mon_to(item)== True:
             lista_crypto_to.append(item)
-
 
     lista_valor_actual_cada_crypto = []
     for crypto in lista_crypto_verificada:
@@ -166,9 +169,4 @@ def valor_actua():
         valoractualcrypto= (cambio_in_euros * cantidad_real_crypto)
         lista_valor_actual_cada_crypto.append(valoractualcrypto)
         resultado= sum(lista_valor_actual_cada_crypto)
-
-    return(resultado)
-
-
-
-
+        return resultado

@@ -4,20 +4,21 @@
 
 
 {% if data %}
-    <table role="grid">
-        <thead>
-            <tr>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>From</th>
-                <th>Q</th>
-                <th>To</th>
-                <th>Q</th>
-                <th>P.U</th>
-            </tr>
+<table role="grid">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>From</th>
+            <th>Q</th>
+            <th>To</th>
+            <th>Q</th>
+            <th>P.U</th>
+        </tr>
 
-        </thead>
-        <tbody>
+    </thead>
+    <tbody>
+        <div class="div1">
 
             {% for movements in data %}
             <tr>
@@ -27,15 +28,16 @@
                 <td>{{movements.cantidad_from}}</td>
                 <td>{{movements.moneda_to}}</td>
                 <td>{{movements.cantidad_to}}</td>
-                
 
 
 
-             </tr>
+
+            </tr>
             {% endfor %}
-            
-        </tbody>
-    </table>
+        </div>
+
+    </tbody>
+</table>
 {% else %}
 <h3>No existen datos de movimientos...</h3>
 
