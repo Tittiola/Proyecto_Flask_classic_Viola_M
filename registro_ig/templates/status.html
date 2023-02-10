@@ -1,26 +1,48 @@
 {% extends "base.html" %}
 
 {% block section %}
-<h1>ESTADO DE LA INVERSION</h1>
+
+<body>
+    <br>
+  
+
+    <h1>ESTADO DE LA INVERSION</h1>
+
+    <form action="/status" method="post">
+        <p><strong>Invertido: </strong>{{invertido}}</p>
+
+        <p><strong>Recuperado: </strong>{{recuperado}}</p>
+
+        <p><strong>Valor de compra: </strong>{{valor_compra}}</p>
+
+        <p><strong>Valor actual: </strong>{{valor_actual}}</p>
+
+        <input type="submit" name="reiniciar" value="reiniciar">
 
 
-<form action="/status" method="post">
-    <p><strong>Invertido: </strong>{{invertido}}</p>
-
-    <p><strong>Recuperado: </strong>{{recuperado}}</p>
-
-    <p><strong>Valor de compra: </strong>{{valor_compra}}</p>
-
-    <p><strong>Valor actual: </strong>{{valor_actual}}</p>
-
-    <input type="submit" name="reiniciar" value="reiniciar">
 
 
+    </form>
+    <nav aria-label="breadcrumb">
+        <ul class="container">
+            {% if page == "purchase" %}
+            <li><a href="/">Home</a></li>
+            <li>Purchase</li>
+            <li><a href="/status">Status<a></li>
+            {% endif %}
+            {% if page == "Home" %}
+            <li>Home</li>
+            <li><a href="/purchase">Purchase</a></li>
+            <li><a href="/status">Status<a></li>
+            {% endif %}
+            {% if page == "Status" %}
+            <li>Status</li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/purchase">Purchase</a></li>
+            
+            {% endif %}
+        </ul>
+    </nav>
 
-
-</form>
-
-
-
-
+</body>
 {% endblock %}

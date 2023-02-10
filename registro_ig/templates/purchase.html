@@ -4,6 +4,7 @@
 
 <body>
   <h1>COMPRA DE CRIPTO</h1>
+
   <form action="/purchase" name="form" method="POST">
 
 
@@ -15,7 +16,7 @@
       <label for="moneda_from">
         Moneda From:
         <select id="moneda_from" name="moneda_from">
-          <option value="{{form.moneda_from}}" selected>Selecciona la moneda que quiere convertir</option>
+          <option value="{{form.moneda_from}}" selected>Selecciona una de tus monedas que quiere convertir</option>
 
           <option value="EUR" {% if form.moneda_from=="EUR" %} selected {% endif %}>EUR</option>
           <option value="ETH" {% if form.moneda_from=="ETH" %} selected {% endif %}>ETH</option>
@@ -35,7 +36,7 @@
 
       <label for="moneda_to">Moneda to</label>
       <select id="moneda_to" name="moneda_to" required>
-        <option value="{{form.moneda_to}}" selected>Selecciona la moneda que quiere convertir</option>
+        <option value="{{form.moneda_to}}" selected>Selecciona el tipo de moneda que quiere convertir</option>
 
 
         <option value="EUR" {% if form.moneda_to=="EUR" %} selected {% endif %}>EUR</option>
@@ -59,7 +60,6 @@
 
     <div class="grid">
 
-      <!-- Markup example 1: input is inside label -->
       <label for="cantidad_from">
         Q: </label>
       <input type="text" id="cantidad_from" name="cantidad_from" value="{{form.cantidad_from}}"
@@ -72,15 +72,13 @@
         Q: </label>
       <input type="number" id="cantidad_to" name="cantidad_to" value="{{form.cantidad_to}}" placeholder="cantidad_to">
 
-
-
-
     </div>
 
     <label for="precio_unitario">
       P.U.
       <input type="value" id="precio_unitario" name="precio_unitario" placeholder="precio_unitario"
         value="{{ precio_unitario }}">
+
       <small>Esta es tu inversion.</small>
 
 

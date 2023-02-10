@@ -1,20 +1,19 @@
 from registro_ig import app
 from datetime import date,datetime
 from flask import render_template,request,redirect
-from registro_ig.models import select_all,status_recuperado,status_invertido,change_from_to,insert,valor_compra,delete_all,valor_act,cantidad_realcryp
+from registro_ig.models import select_all,status_recuperado,status_invertido,change_from_to,insert,valor_compra,delete_all,valor_act,cantidad_realcryp,consulta_mon_from_to
 
 #funcion que controla los errores
 def validatePurchase(requestForm):
-    lista_criptos=["ETH","BNB","ADA","DOT","BTC","USDT","XRP","SOL","MATIC"]
     moneda_to=requestForm['moneda_to']
     moneda_from=requestForm['moneda_from']
     cantidad_from=requestForm['cantidad_from']
     errores=[]
-    if moneda_from != "EUR" and moneda_from  != lista_criptos:
+    if moneda_from != "EUR" and consulta_mon_from_to(moneda_from) == False:#evito resultado notype
         errores.append("Moneda inexsistente en su cartera")
     if moneda_from ==  moneda_to:
         errores.append("Moneda invalida: No puede intercambiar valores con la misma mondeda")
-    if moneda_from != "EUR" and float(cantidad_from) > cantidad_realcryp(moneda_from):
+    if moneda_from != "EUR" and float(cantidad_from) > cantidad_realcryp(moneda_from):#calculo si tengo en realidad la cantidad que pongo en cantidad_from
         errores.append("Cantidad insuficiente, o moneda inexsistente en su cartera")
     if float(cantidad_from) <= 0:
         errores.append("No puede introducir cantidad inferior a 1")
@@ -87,6 +86,6 @@ def resume():
         return render_template("status.html", pageTitle="Status", valor_actual=valor_actual, invertido=invertido, recuperado=recuperado,valor_compra=valor_compr, form={})
         
     else:
-        if 'reiniciar' in request.form:
+        if 'reiniciar' in request.form:#he puesto un boton para poder poner a cero la tabla y volver a empezar la inversion
             delete_all()
             return redirect("/")

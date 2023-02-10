@@ -8,9 +8,6 @@
     <title>Inversion en criptomonedas: {{pageTitle}}</title>
     <link rel="stylesheet" href="/static/css/pico.css">
     <link rel="stylesheet" href="/static/css/styles.css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,1,200" />
-    <i class="fa-brands fa-amazon" style="font-size:200px;"></i>
 
 </head>
 
@@ -20,7 +17,7 @@
             Invertir en Criptomonedas
         </div>
     </header>
-    <nav aria-label="breadcrumb" class="container">
+    <nav aria-label="breadcrumb">
         <ul class="container">
             {% if page == "purchase" %}
             <li><a href="/">Home</a></li>
@@ -32,14 +29,14 @@
             <li><a href="/purchase">Purchase</a></li>
             <li><a href="/status">Status<a></li>
             {% endif %}
-            {% if page == "status" %}
+            {% if page == "Status" %}
+            <li>Status</li>
             <li><a href="/">Home</a></li>
             <li><a href="/purchase">Purchase</a></li>
-            <li>Status</li>
+            
             {% endif %}
         </ul>
     </nav>
-
 
     <section class="container">
         {% with messages = get_flashed_messages() %}

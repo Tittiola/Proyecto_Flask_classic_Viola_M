@@ -1,54 +1,39 @@
+@@ -1,44 +1,51 @@
 footer{
     background-color: var(--primary);
     color: var(--primary-inverse);
     font-size: 1.0em;
     font-weight: bold;
-    background-color: blueviolet;
 }
-
 header{
     background-color: var(--primary);
     color: var(--primary-inverse);
     font-size: 2.0em;
     font-weight: bold;
-    background-color: rgb(18, 16, 19);
-    font-size: 50px;
 }
-
 body{
     min-height: 108vh;
     display: grid;
     grid-template-rows: auto 40px 1fr auto;
     margin: 1;
-    background-color:white;
-    font-family: Arial, Helvetica, sans-serif
 }
-
 label{
   display: block;
   margin-bottom: calc(var(--spacing) * 2);
   font-weight: var(--form-label-font-weight, var(--font-weight));
   left: 0in;
   
-
 }
-
-nav{
-    background-color:white;
-    min-width: 50px;
-    height: 50px;
-    color: black;
-    text-size-adjust: 50px;
-    text-transform: uppercase;
-    text-align: left;
-    
+ul.errors{
+    color: red;
+    font-weight: bold;
+    font-size: 0.8em;
 }
-
-tbody{
-    top: 220px;
-  
-
-
+ul.flashes{
+    color: rgb(42, 172, 85);
+    font-weight: bold;
+    font-size: 0.8em;
+}
 }
 
 
@@ -64,7 +49,9 @@ ul.flashes{
     font-size: 0.8em;
 }
 
-
+.div1{
+    margin-top: 0;
+}
 
 
 

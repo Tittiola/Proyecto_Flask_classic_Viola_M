@@ -32,7 +32,7 @@ flask --app main --debug run
 ```
 
 ## Comando especial para lanzar el servidor en un puerto diferente
-- Esto se utiliza en el caso que el puerto 5000 este ocupado
+Esto se utiliza en el caso que el puerto 5000 este ocupado
 
 ```
 flask --app main run -p 5001
@@ -48,7 +48,7 @@ https://rest.coinapi.io/v1/exchanges/?apikey=24E07BC2-CA11-4FD2-9F14-889CEE3B8DB
 ```
 ## Renombrar .env y config.py a env.template y config_template
 
-para mantener en git instrucciones no especificas
+. para mantener en git instrucciones no especificas
 
 ## URL con cambio (ex de ETH a EUR)
 
@@ -64,3 +64,4 @@ https://rest.coinapi.io/v1/exchangerate/ETH/EUR?apikey=24E07BC2-CA11-4FD2-9F14-8
 
 ## En data info create sqlite, base de datos
 ```
+. instrucciones para poder crear el mismo formulario
