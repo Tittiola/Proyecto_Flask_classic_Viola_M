@@ -1,19 +1,20 @@
 from registro_ig import app
 from datetime import date,datetime
 from flask import render_template,request,redirect
-from registro_ig.models import select_all,status_recuperado,status_invertido,change_from_to,insert,valor_compra,delete_all,valor_act,cantidad_realcryp,consulta_mon_from_to
+from registro_ig.models import select_all,money_back,invested_money,change_from_to,insert,delete_all,current_value,consult_currencies
 
 #funcion que controla los errores
 def validatePurchase(requestForm):
     moneda_to=requestForm['moneda_to']
     moneda_from=requestForm['moneda_from']
     cantidad_from=requestForm['cantidad_from']
+    cantidad_realcry = (money_back(moneda_from)[0][0]) - (invested_money(moneda_from)[0][0])
     errores=[]
-    if moneda_from != "EUR" and consulta_mon_from_to(moneda_from) == False:#evito resultado notype
+    if moneda_from != "EUR" and consult_currencies(moneda_from) == False:#evito resultado notype
         errores.append("Moneda inexsistente en su cartera")
     if moneda_from ==  moneda_to:
         errores.append("Moneda invalida: No puede intercambiar valores con la misma mondeda")
-    if moneda_from != "EUR" and float(cantidad_from) > cantidad_realcryp(moneda_from):#calculo si tengo en realidad la cantidad que pongo en cantidad_from
+    if moneda_from != "EUR" and float(cantidad_from) > cantidad_realcry:#calculo si tengo en realidad la cantidad que pongo en cantidad_from
         errores.append("Cantidad insuficiente, o moneda inexsistente en su cartera")
     if float(cantidad_from) <= 0:
         errores.append("No puede introducir cantidad inferior a 1")
@@ -29,11 +30,14 @@ def index():
     return render_template("index.html", page ="Home", pageTitle="Home",data=registros)#data esta en index con jinja, y aqui creamos la variable asignandole la lista de diccionario data_mov
 
 
+
 @app.route("/purchase",methods=["GET","POST"])
 def purchase():
     
     if request.method == "GET":
+        
         return render_template("purchase.html",page ="purchase",form={})
+    
     else:#entra nel post y son 2 POST
         cantidad_from=float(request.form['cantidad_from'])
         moneda_from=request.form['moneda_from']
@@ -78,12 +82,12 @@ def purchase():
 @app.route("/status", methods=["GET","POST"] )
 def resume():
     if request.method == "GET":#calculos sobre la base de datos
-        invertido=status_invertido("EUR")[0][0]
-        recuperado=status_recuperado("EUR")[0][0]
-        valor_compr= valor_compra("EUR")
-        valor_actual=valor_act()#funcion que captura el valor actual de euros con las cryptomonedas que efectivamente se poseen
+        invertido=invested_money("EUR")[0][0]
+        recuperado=money_back("EUR")[0][0]
+        valor_compra= (invested_money("EUR")[0][0] - money_back("EUR")[0][0])
+        valor_actual=current_value()#funcion que captura el valor actual de euros con las cryptomonedas que efectivamente se poseen
         
-        return render_template("status.html", pageTitle="Status", valor_actual=valor_actual, invertido=invertido, recuperado=recuperado,valor_compra=valor_compr, form={})
+        return render_template("status.html", pageTitle="Status", valor_actual=valor_actual, invertido=invertido, recuperado=recuperado,valor_compra=valor_compra, form={})
         
     else:
         if 'reiniciar' in request.form:#he puesto un boton para poder poner a cero la tabla y volver a empezar la inversion
