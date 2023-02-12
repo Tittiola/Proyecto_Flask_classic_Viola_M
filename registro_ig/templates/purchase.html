@@ -2,28 +2,26 @@
 
 {% block section %}
 
-<p></p>
-<p></p>
-<p></p>
+
+
 <body>
-
-
-
-
-
+  <p></p>
+  <p></p>
+  <p></p>
   <form action="/purchase" name="form" method="POST">
    
-    <nav aria-label="breadcrumb">
-      <ul>
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/status">Estado</a></li>
-      </ul>
-    </nav>
   
+
   
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
 
     <div class="container">
-
+   
 
       <!-- Markup example 1: input is inside label -->
       <label for="moneda_from">
@@ -71,18 +69,19 @@
 
     </div>
 
-    <div class="grid">
+    <div class= container>
 
       <label for="cantidad_from">
-        Q: </label>
+      </label>
       <input type="text" id="cantidad_from" name="cantidad_from" value="{{form.cantidad_from}}"
         placeholder="cantidad_from">
 
       <input type="submit" name="calcular" value="Calcular">
+      
 
 
-      <label for="cantidad_to">
-        Q: </label>
+      <label for="cantidad_to" id="cantidad_to" name="cantidad_to" value="{{form.cantidad_to}}" placeholder="cantidad_to">
+      </label>
       <input type="number" id="cantidad_to" name="cantidad_to" value="{{form.cantidad_to}}" placeholder="cantidad_to">
 
     </div>

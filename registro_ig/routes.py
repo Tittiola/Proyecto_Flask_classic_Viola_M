@@ -1,7 +1,8 @@
 from registro_ig import app
-from datetime import date,datetime
+from datetime import datetime
 from flask import render_template,request,redirect
-from registro_ig.models import select_all,money_back,invested_money,change_from_to,insert,delete_all,current_value,consult_currencies
+from registro_ig.models import *
+
 
 #funcion que controla los errores
 def validatePurchase(requestForm):
@@ -27,31 +28,36 @@ def index():
 
     registros = select_all()#importo todo el registro
 
-    return render_template("index.html", page ="Home", pageTitle="Home",data=registros)#data esta en index con jinja, y aqui creamos la variable asignandole la lista de diccionario data_mov
+    return render_template("index.html", page = "Inicio", pageTitle="Home",data=registros)#data esta en index con jinja, y aqui creamos la variable asignandole la lista de diccionario data_mov
 
 
 
 @app.route("/purchase",methods=["GET","POST"])
 def purchase():
+   
     
     if request.method == "GET":
         
-        return render_template("purchase.html",page ="purchase",form={})
+        return render_template("purchase.html",page ="Compra",form={})
     
     else:#entra nel post y son 2 POST
         cantidad_from=float(request.form['cantidad_from'])
         moneda_from=request.form['moneda_from']
         moneda_to=request.form['moneda_to']
+        cantidad_to=request.form['cantidad_to']
         
         if 'calcular' in request.form:#primer boton y primer post
 
             errores = validatePurchase(request.form)
             if errores:#si hay errores no calcula
-                return render_template("purchase.html",msgError=errores, form={})
+                return render_template("purchase.html",msgError=errores, page ="Compra",cantidad_from=cantidad_from, cantidad_to=cantidad_to, form={})
         
             else:
-                cambio=change_from_to(moneda_from,moneda_to)#peticion api del intercambio
+                
+                cambio =change_from_to(moneda_from,moneda_to)#peticion api del intercambio
+                
                 precio_unitario = cantidad_from/cambio
+                cantidad_to = cambio
                 
                 lista_request={
                     "moneda_from":request.form['moneda_from'],
@@ -61,7 +67,7 @@ def purchase():
                     "precio_unitario":str(precio_unitario)
                 }#declaro la lista de los argumentos del form para que se devuelvan en los botones 
                 
-                return render_template("purchase.html", form=lista_request, pageTitle="Invertir", msgError=errores, precio_unitario=precio_unitario)
+                return render_template("purchase.html", page ="Compra", cantidad_to=cambio, form=lista_request, pageTitle="Invertir", msgError=errores, precio_unitario=precio_unitario)
         
         if 'comprar' in request.form:#segunda peticion "POST", finalmente capturo horas y fecha
 
@@ -87,7 +93,7 @@ def resume():
         valor_compra= (invested_money("EUR")[0][0] - money_back("EUR")[0][0])
         valor_actual=current_value()#funcion que captura el valor actual de euros con las cryptomonedas que efectivamente se poseen
         
-        return render_template("status.html", pageTitle="Status", valor_actual=valor_actual, invertido=invertido, recuperado=recuperado,valor_compra=valor_compra, form={})
+        return render_template("status.html", page ="Estado", valor_actual=valor_actual, invertido=invertido, recuperado=recuperado,valor_compra=valor_compra, form={})
         
     else:
         if 'reiniciar' in request.form:#he puesto un boton para poder poner a cero la tabla y volver a empezar la inversion

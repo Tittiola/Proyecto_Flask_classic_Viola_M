@@ -1,8 +1,9 @@
 header,footer{
-    background-color: var(--primary);
-    color: var(--primary-inverse);
+    background-color: rgb(222, 219, 232);
+    color: rgb(219, 105, 223);
     font-size: 2em;
     font-weight: bold;
+    text-align:end
 }
 
 body{
@@ -10,6 +11,7 @@ body{
     display: grid;
     grid-template-rows: auto 50px 1fr auto;
     margin: 0;
+    background-color: white;
 }
 
 ul.errors{
@@ -22,4 +24,12 @@ ul.flashes{
     color: rgb(42, 172, 85);
     font-weight: bold;
     font-size: 0.8em;
+}
+.nav{
+    color: black;
+    
+}
+input{
+    background-color: rgb(244, 243, 241);
+    color: rgb(226, 48, 149);
 }

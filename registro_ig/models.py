@@ -17,6 +17,7 @@ def change_crypto(coin):#funcion que pide el cambio en Euros poniendo un tipo de
 
 #funciones con peticiones sqlite
 
+
 def select_all():#importo todo lo que hay en el form sql a la pagina html
     connect = Conexion("select id,date,time,moneda_from,cantidad_from,moneda_to,cantidad_to from movements order by date;")
     columnas= connect.res.description#capturo los nombres de columnas
